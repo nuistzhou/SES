@@ -41,10 +41,13 @@ Timestamp = NewType('Timestamp', datetime.datetime)
 
 def generateTimestampSeries(nr_points: int) -> List[Timestamp]:
     """Genreate a series of timestamps with 3 minutes step starting from a random timestamp for every route."""
+    # Generate the timestamp series following the normal distribution in order to simulate more practically 
+    # beacause flights are most common in daytime.
     random_nr = random.normalvariate(mu=0.5, sigma=0.1)
     dep_time = (start_time + random_nr * (end_time - start_time))
     timestamp_series = []
     for i in range(nr_points):
+        # Attach timestamp to vertices on the route every 3 minutes for simulation.
         ts = (dep_time + datetime.timedelta(minutes=3*i)).timestamp()
         timestamp_series.append(int(ts))
     return timestamp_series
